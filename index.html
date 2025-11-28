@@ -10,16 +10,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <!-- Iconos (FontAwesome) para los botones sociales -->
+    <!-- Iconos (FontAwesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
             /* COLORES */
             --bg-color: #000000;
-            --card-bg: #0a0a0a; /* Un negro sutilmente más claro para diferenciar tarjetas */
-            --gold-primary: #FFD700; /* Oro clásico */
-            --gold-metallic: #D4AF37; /* Oro metálico más serio */
+            --card-bg: #0a0a0a;
+            --gold-primary: #FFD700;
+            --gold-metallic: #D4AF37;
             --gold-light: #ffeebb;
             --text-white: #ffffff;
             
@@ -29,25 +29,18 @@
             --insta-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-color);
             color: var(--gold-primary);
-            font-family: 'Lato', sans-serif; /* Fuente legible para textos */
+            font-family: 'Lato', sans-serif;
             overflow-x: hidden;
         }
 
-        h1, h2, h3, .precio {
-            font-family: 'Cinzel', serif; /* Fuente elegante para títulos */
-            letter-spacing: 1px;
-        }
+        h1, h2, h3, .precio { font-family: 'Cinzel', serif; letter-spacing: 1px; }
 
-        /* HEADER MODIFICADO */
+        /* HEADER */
         header {
             text-align: center;
             padding: 40px 20px;
@@ -72,7 +65,7 @@
         .social-icon-header:hover { transform: scale(1.1); }
 
         .logo-container img {
-            max-width: 200px; /* Ajusta el tamaño de tu logo aquí */
+            max-width: 200px;
             height: auto;
             display: block;
         }
@@ -99,7 +92,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr); /* 3 columnas desktop */
             gap: 30px;
-            padding-bottom: 50px;
+            padding-bottom: 30px;
         }
 
         /* TARJETAS */
@@ -122,7 +115,7 @@
 
         .card-img-container {
             width: 100%;
-            height: 350px; /* Altura fija para uniformidad */
+            height: 350px;
             overflow: hidden;
             position: relative;
         }
@@ -130,15 +123,13 @@
         .card-img-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Recorta la imagen para llenar el espacio sin deformar */
+            object-fit: cover;
             transition: transform 0.5s ease;
         }
 
-        .card:hover .card-img-container img {
-            transform: scale(1.05);
-        }
+        .card:hover .card-img-container img { transform: scale(1.05); }
 
-        /* ESTILO CALIFICACIÓN ★★★★★ */
+        /* ESTILO CALIFICACIÓN */
         .rating-badge {
             position: absolute;
             top: 10px;
@@ -154,22 +145,37 @@
             pointer-events: none;
         }
 
-        .card-info {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .card-title {
-            font-size: 1.4rem;
-            color: var(--gold-primary);
-            margin-bottom: 10px;
-        }
-
+        .card-info { padding: 20px; text-align: center; }
+        .card-title { font-size: 1.4rem; color: var(--gold-primary); margin-bottom: 10px; }
         .card-price {
             font-size: 1.6rem;
             font-weight: 700;
-            color: var(--text-white); /* Precio en blanco resalta más sobre negro */
-            text-shadow: 0 0 5px var(--gold-primary); /* Brillo dorado */
+            color: var(--text-white);
+            text-shadow: 0 0 5px var(--gold-primary);
+        }
+
+        /* PAGINACIÓN */
+        .pagination-controls {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .page-btn {
+            background: transparent;
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .page-btn:hover, .page-btn.active {
+            background: var(--gold-primary);
+            color: black;
         }
 
         /* MODAL */
@@ -179,7 +185,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9); /* Fondo negro traslúcido */
+            background: rgba(0, 0, 0, 0.9);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -190,10 +196,7 @@
             padding: 20px;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
 
         .modal-content {
             background: #050505;
@@ -209,7 +212,6 @@
             flex-direction: column;
         }
 
-        /* Botón cerrar modal */
         .close-modal {
             position: absolute;
             top: 15px;
@@ -226,7 +228,7 @@
             text-align: center;
         }
 
-        /* Galería dentro del modal */
+        /* Galería modal */
         .modal-gallery {
             display: flex;
             overflow-x: auto;
@@ -247,33 +249,39 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            cursor: zoom-in; /* Indica que es clicable */
+            cursor: zoom-in;
         }
 
-        .modal-details {
-            padding: 25px;
+        /* Botón Toggle Reseñas */
+        .toggle-reviews-container {
+            background: #050505;
             text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid #333;
         }
 
-        .modal-title {
-            font-size: 2rem;
+        .btn-toggle-reviews {
+            background: transparent;
+            border: 1px solid var(--gold-metallic);
             color: var(--gold-primary);
-            margin-bottom: 5px;
-        }
-
-        .modal-price {
-            font-size: 1.8rem;
-            color: #fff;
-            margin-bottom: 20px;
-        }
-
-        .modal-desc {
-            color: #ccc;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            padding: 8px 16px;
+            cursor: pointer;
             font-family: 'Lato', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: 0.3s;
         }
+
+        .btn-toggle-reviews:hover {
+            background: rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .modal-details { padding: 25px; text-align: center; }
+        .modal-title { font-size: 2rem; color: var(--gold-primary); margin-bottom: 5px; }
+        .modal-price { font-size: 1.8rem; color: #fff; margin-bottom: 20px; }
+        .modal-desc { color: #ccc; font-size: 1rem; line-height: 1.6; margin-bottom: 30px; font-family: 'Lato', sans-serif; }
 
         /* BOTONES DE ACCIÓN */
         .btn-action {
@@ -292,21 +300,14 @@
             border: none;
         }
 
-        .btn-action:hover {
-            transform: scale(1.02);
-            filter: brightness(1.1);
-        }
-
-        .btn-action i {
-            margin-right: 10px;
-            font-size: 1.3rem;
-        }
+        .btn-action:hover { transform: scale(1.02); filter: brightness(1.1); }
+        .btn-action i { margin-right: 10px; font-size: 1.3rem; }
 
         .btn-wa { background-color: var(--whatsapp-green); box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
         .btn-ms { background-color: var(--messenger-blue); box-shadow: 0 4px 15px rgba(0, 132, 255, 0.3); }
         .btn-ig { background: var(--insta-gradient); box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3); }
 
-        /* LIGHTBOX (Full screen image) */
+        /* LIGHTBOX */
         .lightbox {
             position: fixed;
             top: 0;
@@ -330,13 +331,15 @@
 
         /* RESPONSIVE */
         @media (max-width: 1024px) {
-            .grid-productos { grid-template-columns: repeat(2, 1fr); } /* Tablet: 2 col */
+            .grid-productos { grid-template-columns: repeat(3, 1fr); } /* Desktop default */
         }
 
-        /* Grid Móvil Modificado */
+        /* Móvil / Tablet Horizontal */
         @media (max-width: 768px) {
             .grid-productos { grid-template-columns: repeat(2, 1fr); }
         }
+
+        /* Móvil Pequeño */
         @media (max-width: 480px) {
             .grid-productos { grid-template-columns: 1fr; }
             .modal-title { font-size: 1.5rem; }
@@ -362,7 +365,6 @@
             <a href="https://tiktok.com/@jcn.papercraft" target="_blank" class="social-icon-header"><i class="fa-brands fa-tiktok"></i></a>
         </div>
         
-        <!-- TEXTO DE PRUEBA SOCIAL (editable) -->
         <div class="social-proof">
             Más de 1,200 plantillas vendidas ⭐
         </div>
@@ -370,17 +372,25 @@
 
     <div class="container">
         <div class="grid-productos" id="grid-productos">
-            <!-- Aquí se inyectan las tarjetas automáticamente con JavaScript -->
+            <!-- Productos inyectados por JS -->
         </div>
+        <!-- Controles de Paginación -->
+        <div class="pagination-controls" id="pagination-controls"></div>
     </div>
 
-    <!-- MODAL (Oculto por defecto) -->
+    <!-- MODAL -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-content" id="modal-content">
             <span class="close-modal">&times;</span>
             
+            <!-- Galería -->
             <div class="modal-gallery" id="modal-gallery">
                 <!-- Fotos inyectadas por JS -->
+            </div>
+
+            <!-- Botón para cambiar a fotos de reseña -->
+            <div class="toggle-reviews-container">
+                <button class="btn-toggle-reviews" id="btn-toggle-reviews">Ver Fotos de Reseña</button>
             </div>
 
             <div class="modal-details">
@@ -388,20 +398,6 @@
                 <div class="modal-price" id="m-price">$000</div>
                 <p class="modal-desc" id="m-desc">Descripción...</p>
                 
-                <!-- Nueva sección de Reseñas -->
-                <div class="review-photos">
-                    <h3 style="margin:20px 0 10px; color:var(--gold-primary);">Fotos de reseña</h3>
-                    <div class="review-gallery" style="display:flex; overflow-x:auto; gap:10px; padding:10px 0;">
-                        <!-- Fotos Placeholder de Reseña -->
-                        <img src="img/goku.png">
-                        <img src="https://via.placeholder.com/150x150/222/FFD700?text=Cliente+2" style="height:120px; width:auto; border-radius:8px; flex:0 0 auto;">
-                        <img src="https://via.placeholder.com/150x150/222/FFD700?text=Cliente+3" style="height:120px; width:auto; border-radius:8px; flex:0 0 auto;">
-                        <img src="img/gb2.png;">
-                        <img src="https://via.placeholder.com/150x150/222/FFD700?text=Cliente+5" style="height:120px; width:auto; border-radius:8px; flex:0 0 auto;">
-                        <img src="img/gb3.png">
-                    </div>
-                 </div>
-
                 <!-- Botones de contacto -->
                 <a href="#" class="btn-action btn-wa" id="btn-wa" target="_blank">
                     <i class="fa-brands fa-whatsapp"></i> Comprar por WhatsApp
@@ -423,18 +419,19 @@
 
     <script>
         // ==========================================
-        // CONFIGURACIÓN PERSONAL (¡EDITA ESTO!)
+        // CONFIGURACIÓN
         // ==========================================
         const CONFIG = {
-            whatsappNumber: "7221477827",  // Tu número con código de país, sin el '+'
-            messengerUser: "jcn.papercraft",       // Tu usuario de Facebook (m.me/usuario)
-            instagramUser: "jcn.papercraft",      // Tu usuario de Instagram
-            moneda: "$"                       // Símbolo de moneda visual
+            whatsappNumber: "7221477827",
+            messengerUser: "jcn.papercraft",
+            instagramUser: "jcn.papercraft",
+            moneda: "$"
         };
 
         // ==========================================
-        // TUS PLANTILLAS (¡AGREGA AQUÍ!)
+        // DATOS DE PRODUCTOS
         // ==========================================
+        // Se agregó "imgReviews" a cada objeto
         const plantillas = [
             {
                 id: 1,
@@ -443,10 +440,8 @@
                 precioUsd: "11 USD",
                 descripcion: "Modelo escala 1:1 de Goku fase 3. Nivel de detalle extremo en el cabello. Archivo PDF + PDO incluidos. Altura final: 1.80m.",
                 imgPrincipal: "img/goku.png", 
-                imgModal: [
-                    "img/gb2.png",
-                    "img/gb3.png"
-                ]
+                imgModal: [ "img/gb2.png", "img/gb3.png" ],
+                imgReviews: [ "https://via.placeholder.com/400x500/333/FFD700?text=Goku+Rev1", "https://via.placeholder.com/400x500/333/FFD700?text=Goku+Rev2" ]
             },
             {
                 id: 2,
@@ -455,10 +450,8 @@
                 precioUsd: "8 USD",
                 descripcion: "Busto detallado de Vegeta con la M de Majin. Ideal para principiantes. 15 páginas. Incluye instrucciones de armado paso a paso.",
                 imgPrincipal: "img/gb2.png",
-                imgModal: [
-                    "https://via.placeholder.com/400x500/111/D4AF37?text=Vegeta+Frente",
-                    "img/goku.png"
-                ]
+                imgModal: [ "https://via.placeholder.com/400x500/111/D4AF37?text=Vegeta+Frente", "img/goku.png" ],
+                imgReviews: [ "https://via.placeholder.com/400x500/333/FFD700?text=Vegeta+Rev1", "https://via.placeholder.com/400x500/333/FFD700?text=Vegeta+Rev2" ]
             },
             {
                 id: 3,
@@ -467,10 +460,8 @@
                 precioUsd: "15 USD",
                 descripcion: "Casco wearable (ponible) con sistema de apertura motorizable (instrucciones opcionales). Texturas HD incluidas.",
                 imgPrincipal: "https://via.placeholder.com/400x500/111/D4AF37?text=Iron+Man+Mk85",
-                imgModal: [
-                    "https://via.placeholder.com/400x500/111/D4AF37?text=IronMan+Open",
-                    "https://via.placeholder.com/400x500/111/D4AF37?text=IronMan+Closed"
-                ]
+                imgModal: [ "https://via.placeholder.com/400x500/111/D4AF37?text=IronMan+Open", "https://via.placeholder.com/400x500/111/D4AF37?text=IronMan+Closed" ],
+                imgReviews: [] // Sin reseñas de ejemplo
             },
             {
                 id: 4,
@@ -479,27 +470,41 @@
                 precioUsd: "9 USD",
                 descripcion: "Máscara de Deadpool para colgar en la pared, estilo trofeo. Muy fácil de armar, ideal para fin de semana.",
                 imgPrincipal: "https://via.placeholder.com/400x500/111/D4AF37?text=Deadpool",
-                imgModal: [
-                    "https://via.placeholder.com/400x500/111/D4AF37?text=Deadpool+Wall",
-                    "https://via.placeholder.com/400x500/111/D4AF37?text=Deadpool+Side"
-                ]
+                imgModal: [ "https://via.placeholder.com/400x500/111/D4AF37?text=Deadpool+Wall", "https://via.placeholder.com/400x500/111/D4AF37?text=Deadpool+Side" ],
+                imgReviews: [ "https://via.placeholder.com/400x500/333/FFD700?text=Pool+Rev1" ]
             }
         ];
 
         // ==========================================
-        // LÓGICA DEL SISTEMA (NO TOCAR)
+        // LÓGICA DEL SISTEMA
         // ==========================================
         const grid = document.getElementById('grid-productos');
+        const paginationControls = document.getElementById('pagination-controls');
         const modalOverlay = document.getElementById('modal-overlay');
-        const modalContent = document.getElementById('modal-content');
         const closeModal = document.querySelector('.close-modal');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
+        const btnToggleReviews = document.getElementById('btn-toggle-reviews');
+        const gallery = document.getElementById('modal-gallery');
 
-        // 1. Renderizar Grid
+        // Paginación Variables
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        
+        // Modal Variables
+        let currentProduct = null;
+        let showingReviews = false;
+
+        // 1. Renderizar Grid con Paginación
         function renderizarTienda() {
             grid.innerHTML = '';
-            plantillas.forEach(prod => {
+            
+            // Calcular índices
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedItems = plantillas.slice(start, end);
+
+            paginatedItems.forEach(prod => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.onclick = () => abrirModal(prod);
@@ -516,22 +521,62 @@
                 `;
                 grid.appendChild(card);
             });
+
+            renderizarPaginacion();
         }
 
-        // 2. Abrir Modal y Llenar Datos
+        function renderizarPaginacion() {
+            paginationControls.innerHTML = '';
+            const totalPages = Math.ceil(plantillas.length / itemsPerPage);
+            
+            if(totalPages <= 1) return; // No mostrar si solo hay 1 página
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                btn.textContent = `Página ${i}`;
+                btn.onclick = () => {
+                    currentPage = i;
+                    renderizarTienda();
+                    window.scrollTo(0, 0);
+                };
+                paginationControls.appendChild(btn);
+            }
+        }
+
+        // 2. Abrir Modal
         function abrirModal(prod) {
-            // Llenar textos
+            currentProduct = prod;
+            showingReviews = false; // Resetear estado
+            btnToggleReviews.textContent = "Ver Fotos de Reseña";
+
+            // Textos
             document.getElementById('m-title').textContent = prod.nombre;
             document.getElementById('m-price').textContent = `${prod.precio} / ${prod.precioUsd}`;
             document.getElementById('m-desc').textContent = prod.descripcion;
 
-            // Llenar galería de imágenes
-            const gallery = document.getElementById('modal-gallery');
+            // Cargar imágenes oficiales por defecto
+            cargarGaleria(prod.imgModal && prod.imgModal.length > 0 ? prod.imgModal : [prod.imgPrincipal]);
+
+            // Links Botones
+            const mensaje = `Hola, quiero comprar la plantilla ${prod.nombre} - Precio: ${prod.precio}/${prod.precioUsd}`;
+            const mensajeEncoded = encodeURIComponent(mensaje);
+            document.getElementById('btn-wa').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${mensajeEncoded}`;
+            document.getElementById('btn-ms').href = `https://m.me/${CONFIG.messengerUser}`;
+            document.getElementById('btn-ig').href = `https://ig.me/m/${CONFIG.instagramUser}`;
+
+            modalOverlay.classList.add('active');
+        }
+
+        // Función auxiliar para cargar imágenes en el modal
+        function cargarGaleria(listaImagenes) {
             gallery.innerHTML = '';
-            // Si hay imagenes en el array modal, las usa, sino usa la principal
-            const imagenes = prod.imgModal && prod.imgModal.length > 0 ? prod.imgModal : [prod.imgPrincipal];
-            
-            imagenes.forEach(imgSrc => {
+            if(listaImagenes.length === 0) {
+                gallery.innerHTML = '<p style="color:white; padding:20px;">No hay fotos disponibles.</p>';
+                return;
+            }
+
+            listaImagenes.forEach(imgSrc => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'modal-gallery-item';
                 
@@ -542,7 +587,7 @@
                 const img = document.createElement('img');
                 img.src = imgSrc;
                 img.onclick = (e) => {
-                    e.stopPropagation(); // Evita conflictos
+                    e.stopPropagation();
                     abrirLightbox(imgSrc);
                 };
 
@@ -550,47 +595,44 @@
                 itemDiv.appendChild(img);
                 gallery.appendChild(itemDiv);
             });
-
-            // Generar Links de Botones
-            const mensaje = `Hola, quiero comprar la plantilla ${prod.nombre} - Precio: ${prod.precio}/${prod.precioUsd}`;
-            const mensajeEncoded = encodeURIComponent(mensaje);
-
-            // WhatsApp
-            document.getElementById('btn-wa').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${mensajeEncoded}`;
-            
-            // Messenger
-            document.getElementById('btn-ms').href = `https://m.me/${CONFIG.messengerUser}`;
-            
-            // Instagram DM
-            document.getElementById('btn-ig').href = `https://ig.me/m/${CONFIG.instagramUser}`;
-
-            // Mostrar
-            modalOverlay.classList.add('active');
         }
+
+        // Lógica del botón Toggle Reseñas
+        btnToggleReviews.onclick = () => {
+            if (!currentProduct) return;
+
+            if (!showingReviews) {
+                // Cambiar a Reseñas
+                const reviews = currentProduct.imgReviews || [];
+                if (reviews.length === 0) {
+                    alert("Este producto aún no tiene fotos de reseñas cargadas.");
+                    return;
+                }
+                cargarGaleria(reviews);
+                btnToggleReviews.textContent = "Volver a Fotos Oficiales";
+                showingReviews = true;
+            } else {
+                // Volver a Oficiales
+                const oficiales = currentProduct.imgModal || [currentProduct.imgPrincipal];
+                cargarGaleria(oficiales);
+                btnToggleReviews.textContent = "Ver Fotos de Reseña";
+                showingReviews = false;
+            }
+        };
 
         // 3. Cerrar Modal
         function cerrarModal() {
             modalOverlay.classList.remove('active');
         }
-
         closeModal.addEventListener('click', cerrarModal);
-        
-        // Cerrar al hacer clic fuera del contenido
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                cerrarModal();
-            }
-        });
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) cerrarModal(); });
 
-        // 4. Lightbox Lógica
+        // 4. Lightbox
         function abrirLightbox(src) {
             lightboxImg.src = src;
             lightbox.classList.add('active');
         }
-
-        lightbox.addEventListener('click', () => {
-            lightbox.classList.remove('active');
-        });
+        lightbox.addEventListener('click', () => { lightbox.classList.remove('active'); });
 
         // Iniciar
         renderizarTienda();
