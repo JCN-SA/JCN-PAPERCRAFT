@@ -43,7 +43,7 @@
         /* HEADER */
         header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 40px 20px 20px; /* Padding ajustado para el buscador */
             background: linear-gradient(to bottom, #050505, #000000);
         }
 
@@ -79,6 +79,46 @@
             border-bottom: 1px solid var(--gold-metallic);
             display: inline-block;
             padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* BUSCADOR (NUEVO) */
+        .search-container {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto 30px auto;
+            width: 90%;
+        }
+
+        .search-input {
+            width: 100%;
+            background: #0a0a0a;
+            border: 1px solid var(--gold-metallic);
+            color: var(--gold-primary);
+            padding: 12px 45px 12px 20px;
+            border-radius: 30px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            border-color: var(--gold-primary);
+        }
+
+        .search-input::placeholder {
+            color: #666;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold-metallic);
+            pointer-events: none;
         }
 
         /* GRID DE PRODUCTOS */
@@ -86,6 +126,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            min-height: 400px; /* Evita colapso si no hay resultados */
         }
 
         .grid-productos {
@@ -93,6 +134,14 @@
             grid-template-columns: repeat(3, 1fr); /* 3 columnas desktop */
             gap: 30px;
             padding-bottom: 30px;
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            color: #666;
+            font-size: 1.2rem;
+            padding: 50px 0;
         }
 
         /* TARJETAS */
@@ -202,7 +251,7 @@
             background: #050505;
             border: 2px solid var(--gold-metallic);
             width: 100%;
-            max-width: 500px;
+            max-width: 500px; /* Default Mobile */
             max-height: 90vh;
             overflow-y: auto;
             border-radius: 10px;
@@ -219,13 +268,18 @@
             font-size: 30px;
             color: var(--gold-primary);
             cursor: pointer;
-            z-index: 10;
+            z-index: 20;
             background: rgba(0,0,0,0.5);
             border-radius: 50%;
             width: 40px;
             height: 40px;
             line-height: 40px;
             text-align: center;
+        }
+
+        /* Estructura Modal */
+        .modal-left-col {
+            width: 100%;
         }
 
         /* Galería modal */
@@ -345,6 +399,44 @@
             .modal-title { font-size: 1.5rem; }
         }
 
+        /* === ARREGLO MODAL PC (SOLICITADO) === */
+        @media (min-width: 768px) {
+            .modal-content {
+                flex-direction: row; /* Lado a lado */
+                max-width: 900px;    /* Más ancho */
+                height: 600px;       /* Altura fija para balance */
+                overflow: hidden;    /* Scroll interno solo en detalles */
+            }
+
+            .modal-left-col {
+                width: 40%;
+                border-right: 1px solid var(--gold-metallic);
+                display: flex;
+                flex-direction: column;
+                background: #000;
+            }
+
+            .modal-gallery {
+                flex: 1; /* Ocupa todo el espacio disponible menos el botón */
+                height: auto; /* Anula el height:300px fijo */
+            }
+
+            .toggle-reviews-container {
+                border-bottom: none;
+                border-top: 1px solid #333;
+                padding: 15px;
+            }
+
+            .modal-details {
+                width: 60%;
+                height: 100%;
+                overflow-y: auto; /* Scroll solo aquí */
+                display: flex;
+                flex-direction: column;
+                justify-content: center; /* Centrar verticalmente */
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -368,6 +460,12 @@
         <div class="social-proof">
             Más de 1,200 plantillas vendidas ⭐
         </div>
+        
+        <!-- BARRA DE BÚSQUEDA (NUEVA) -->
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="search-input" class="search-input" placeholder="Buscar por nombre o precio...">
+        </div>
     </header>
 
     <div class="container">
@@ -383,14 +481,17 @@
         <div class="modal-content" id="modal-content">
             <span class="close-modal">&times;</span>
             
-            <!-- Galería -->
-            <div class="modal-gallery" id="modal-gallery">
-                <!-- Fotos inyectadas por JS -->
-            </div>
+            <!-- Contenedor Columna Izquierda (Para arreglo PC) -->
+            <div class="modal-left-col">
+                <!-- Galería -->
+                <div class="modal-gallery" id="modal-gallery">
+                    <!-- Fotos inyectadas por JS -->
+                </div>
 
-            <!-- Botón para cambiar a fotos de reseña -->
-            <div class="toggle-reviews-container">
-                <button class="btn-toggle-reviews" id="btn-toggle-reviews">Ver Fotos de Reseña</button>
+                <!-- Botón para cambiar a fotos de reseña -->
+                <div class="toggle-reviews-container">
+                    <button class="btn-toggle-reviews" id="btn-toggle-reviews">Ver Fotos de Reseña</button>
+                </div>
             </div>
 
             <div class="modal-details">
@@ -431,7 +532,6 @@
         // ==========================================
         // DATOS DE PRODUCTOS
         // ==========================================
-        // Se agregó "imgReviews" a cada objeto
         const plantillas = [
             {
                 id: 1,
@@ -461,7 +561,7 @@
                 descripcion: "Casco wearable (ponible) con sistema de apertura motorizable (instrucciones opcionales). Texturas HD incluidas.",
                 imgPrincipal: "https://via.placeholder.com/400x500/111/D4AF37?text=Iron+Man+Mk85",
                 imgModal: [ "https://via.placeholder.com/400x500/111/D4AF37?text=IronMan+Open", "https://via.placeholder.com/400x500/111/D4AF37?text=IronMan+Closed" ],
-                imgReviews: [] // Sin reseñas de ejemplo
+                imgReviews: [] 
             },
             {
                  id: 4,
@@ -491,7 +591,7 @@
                 descripcion: "Casco wearable (ponible) con sistema de apertura motorizable (instrucciones opcionales). Texturas HD incluidas.",
                 imgPrincipal: "https://via.placeholder.com/400x500/111/D4AF37?text=Iron+Man+Mk85",
                 imgModal: [ "https://via.placeholder.com/400x500/111/D4AF37?text=IronMan+Open", "https://via.placeholder.com/400x500/111/D4AF37?text=IronMan+Closed" ],
-                imgReviews: [] // Sin reseñas de ejemplo
+                imgReviews: [] 
             },
             {
                 id: 7,
@@ -521,7 +621,7 @@
                 descripcion: "Casco wearable (ponible) con sistema de apertura motorizable (instrucciones opcionales). Texturas HD incluidas.",
                 imgPrincipal: "https://via.placeholder.com/400x500/111/D4AF37?text=Iron+Man+Mk85",
                 imgModal: [ "https://via.placeholder.com/400x500/111/D4AF37?text=IronMan+Open", "https://via.placeholder.com/400x500/111/D4AF37?text=IronMan+Closed" ],
-                imgReviews: [] // Sin reseñas de ejemplo
+                imgReviews: [] 
             },
             {
                 id: 10,
@@ -556,8 +656,10 @@
         const lightboxImg = document.getElementById('lightbox-img');
         const btnToggleReviews = document.getElementById('btn-toggle-reviews');
         const gallery = document.getElementById('modal-gallery');
+        const searchInput = document.getElementById('search-input');
 
-        // Paginación Variables
+        // VARIABLES ESTADO
+        let productosFiltrados = [...plantillas]; // Copia inicial para búsqueda
         let currentPage = 1;
         const itemsPerPage = 10;
         
@@ -565,14 +667,20 @@
         let currentProduct = null;
         let showingReviews = false;
 
-        // 1. Renderizar Grid con Paginación
+        // 1. Renderizar Grid (Usando productosFiltrados)
         function renderizarTienda() {
             grid.innerHTML = '';
             
-            // Calcular índices
+            if (productosFiltrados.length === 0) {
+                grid.innerHTML = '<div class="no-results">No se encontraron productos con esa búsqueda.</div>';
+                paginationControls.innerHTML = '';
+                return;
+            }
+
+            // Calcular índices paginación
             const start = (currentPage - 1) * itemsPerPage;
             const end = start + itemsPerPage;
-            const paginatedItems = plantillas.slice(start, end);
+            const paginatedItems = productosFiltrados.slice(start, end);
 
             paginatedItems.forEach(prod => {
                 const card = document.createElement('div');
@@ -597,9 +705,9 @@
 
         function renderizarPaginacion() {
             paginationControls.innerHTML = '';
-            const totalPages = Math.ceil(plantillas.length / itemsPerPage);
+            const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage);
             
-            if(totalPages <= 1) return; // No mostrar si solo hay 1 página
+            if(totalPages <= 1) return; 
 
             for (let i = 1; i <= totalPages; i++) {
                 const btn = document.createElement('button');
@@ -614,10 +722,27 @@
             }
         }
 
-        // 2. Abrir Modal
+        // 2. Lógica de Búsqueda
+        searchInput.addEventListener('input', (e) => {
+            const termino = e.target.value.toLowerCase();
+            
+            if (termino === '') {
+                productosFiltrados = [...plantillas];
+            } else {
+                productosFiltrados = plantillas.filter(prod => 
+                    prod.nombre.toLowerCase().includes(termino) || 
+                    prod.precio.toLowerCase().includes(termino)
+                );
+            }
+            
+            currentPage = 1; // Resetear a página 1 al buscar
+            renderizarTienda();
+        });
+
+        // 3. Abrir Modal
         function abrirModal(prod) {
             currentProduct = prod;
-            showingReviews = false; // Resetear estado
+            showingReviews = false; 
             btnToggleReviews.textContent = "Ver Fotos de Reseña";
 
             // Textos
@@ -625,7 +750,7 @@
             document.getElementById('m-price').textContent = `${prod.precio} / ${prod.precioUsd}`;
             document.getElementById('m-desc').textContent = prod.descripcion;
 
-            // Cargar imágenes oficiales por defecto
+            // Cargar imágenes oficiales
             cargarGaleria(prod.imgModal && prod.imgModal.length > 0 ? prod.imgModal : [prod.imgPrincipal]);
 
             // Links Botones
@@ -638,7 +763,7 @@
             modalOverlay.classList.add('active');
         }
 
-        // Función auxiliar para cargar imágenes en el modal
+        // Cargar Galería
         function cargarGaleria(listaImagenes) {
             gallery.innerHTML = '';
             if(listaImagenes.length === 0) {
@@ -667,12 +792,11 @@
             });
         }
 
-        // Lógica del botón Toggle Reseñas
+        // Botón Toggle Reseñas
         btnToggleReviews.onclick = () => {
             if (!currentProduct) return;
 
             if (!showingReviews) {
-                // Cambiar a Reseñas
                 const reviews = currentProduct.imgReviews || [];
                 if (reviews.length === 0) {
                     alert("Este producto aún no tiene fotos de reseñas cargadas.");
@@ -682,7 +806,6 @@
                 btnToggleReviews.textContent = "Volver a Fotos Oficiales";
                 showingReviews = true;
             } else {
-                // Volver a Oficiales
                 const oficiales = currentProduct.imgModal || [currentProduct.imgPrincipal];
                 cargarGaleria(oficiales);
                 btnToggleReviews.textContent = "Ver Fotos de Reseña";
@@ -690,14 +813,14 @@
             }
         };
 
-        // 3. Cerrar Modal
+        // 4. Cerrar Modal
         function cerrarModal() {
             modalOverlay.classList.remove('active');
         }
         closeModal.addEventListener('click', cerrarModal);
         modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) cerrarModal(); });
 
-        // 4. Lightbox
+        // 5. Lightbox
         function abrirLightbox(src) {
             lightboxImg.src = src;
             lightbox.classList.add('active');
