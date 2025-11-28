@@ -47,18 +47,34 @@
             letter-spacing: 1px;
         }
 
-        /* HEADER */
+        /* HEADER MODIFICADO */
         header {
             text-align: center;
             padding: 40px 20px;
             background: linear-gradient(to bottom, #050505, #000000);
         }
 
+        .header-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-icon-header {
+            font-size: 25px;
+            color: var(--gold-primary);
+            transition: transform 0.2s;
+            text-decoration: none;
+        }
+        .social-icon-header:hover { transform: scale(1.1); }
+
         .logo-container img {
             max-width: 200px; /* Ajusta el tamaño de tu logo aquí */
             height: auto;
             display: block;
-            margin: 0 auto 20px auto;
         }
 
         .social-proof {
@@ -120,6 +136,22 @@
 
         .card:hover .card-img-container img {
             transform: scale(1.05);
+        }
+
+        /* ESTILO CALIFICACIÓN ★★★★★ */
+        .rating-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 8px;
+            border-radius: 4px;
+            z-index: 10;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            pointer-events: none;
         }
 
         .card-info {
@@ -203,12 +235,19 @@
             background: #000;
         }
         
-        .modal-gallery img {
+        .modal-gallery-item {
             flex: 0 0 100%;
             width: 100%;
             height: 100%;
-            object-fit: contain;
             scroll-snap-align: center;
+            position: relative;
+        }
+
+        .modal-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            cursor: zoom-in; /* Indica que es clicable */
         }
 
         .modal-details {
@@ -267,13 +306,39 @@
         .btn-ms { background-color: var(--messenger-blue); box-shadow: 0 4px 15px rgba(0, 132, 255, 0.3); }
         .btn-ig { background: var(--insta-gradient); box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3); }
 
+        /* LIGHTBOX (Full screen image) */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border: 1px solid var(--gold-primary);
+        }
+
         /* RESPONSIVE */
         @media (max-width: 1024px) {
             .grid-productos { grid-template-columns: repeat(2, 1fr); } /* Tablet: 2 col */
         }
 
-        @media (max-width: 600px) {
-            .grid-productos { grid-template-columns: 1fr; } /* Móvil: 1 col */
+        /* Grid Móvil Modificado */
+        @media (max-width: 768px) {
+            .grid-productos { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .grid-productos { grid-template-columns: 1fr; }
             .modal-title { font-size: 1.5rem; }
         }
 
@@ -282,10 +347,19 @@
 <body>
 
     <header>
-        <!-- LOGO: Reemplaza 'img/logo.png' con tu archivo -->
-        <div class="logo-container">
-            <!-- Uso placeholder como ejemplo, cambia src a "img/logo.png" -->
-            <img src="img/logo.png" alt="Logo Marca" id="mi-logo">
+        <div class="header-row">
+            <!-- Izquierda -->
+            <a href="https://facebook.com/jcn.papercraft" target="_blank" class="social-icon-header"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://instagram.com/jcn.papercraft" target="_blank" class="social-icon-header"><i class="fa-brands fa-instagram"></i></a>
+            
+            <!-- Centro: Logo -->
+            <div class="logo-container">
+                <img src="img/logo.png" alt="Logo Marca" id="mi-logo">
+            </div>
+
+            <!-- Derecha -->
+            <a href="https://youtube.com/@jcn.papercraft" target="_blank" class="social-icon-header"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://tiktok.com/@jcn.papercraft" target="_blank" class="social-icon-header"><i class="fa-brands fa-tiktok"></i></a>
         </div>
         
         <!-- TEXTO DE PRUEBA SOCIAL (editable) -->
@@ -313,6 +387,20 @@
                 <h2 class="modal-title" id="m-title">Nombre</h2>
                 <div class="modal-price" id="m-price">$000</div>
                 <p class="modal-desc" id="m-desc">Descripción...</p>
+                
+                <!-- Nueva sección de Reseñas -->
+                <div class="review-photos">
+                    <h3 style="margin:20px 0 10px; color:var(--gold-primary);">Fotos de reseña</h3>
+                    <div class="review-gallery" style="display:flex; overflow-x:auto; gap:10px; padding:10px 0;">
+                        <!-- Fotos Placeholder de Reseña -->
+                        <img src="https://via.placeholder.com/150x150/222/FFD700?text=Cliente+1" style="height:120px; width:auto; border-radius:8px; flex:0 0 auto;">
+                        <img src="https://via.placeholder.com/150x150/222/FFD700?text=Cliente+2" style="height:120px; width:auto; border-radius:8px; flex:0 0 auto;">
+                        <img src="https://via.placeholder.com/150x150/222/FFD700?text=Cliente+3" style="height:120px; width:auto; border-radius:8px; flex:0 0 auto;">
+                        <img src="https://via.placeholder.com/150x150/222/FFD700?text=Cliente+4" style="height:120px; width:auto; border-radius:8px; flex:0 0 auto;">
+                        <img src="https://via.placeholder.com/150x150/222/FFD700?text=Cliente+5" style="height:120px; width:auto; border-radius:8px; flex:0 0 auto;">
+                        <img src="https://via.placeholder.com/150x150/222/FFD700?text=Cliente+6" style="height:120px; width:auto; border-radius:8px; flex:0 0 auto;">
+                    </div>
+                 </div>
 
                 <!-- Botones de contacto -->
                 <a href="#" class="btn-action btn-wa" id="btn-wa" target="_blank">
@@ -326,6 +414,11 @@
                 </a>
             </div>
         </div>
+    </div>
+
+    <!-- LIGHTBOX DIV -->
+    <div class="lightbox" id="lightbox">
+        <img id="lightbox-img" src="" alt="Zoom">
     </div>
 
     <script>
@@ -342,10 +435,6 @@
         // ==========================================
         // TUS PLANTILLAS (¡AGREGA AQUÍ!)
         // ==========================================
-        // Para agregar una nueva, copia desde la { hasta la }, y pega abajo.
-        // IMPORTANTE: Si no tienes las fotos aún, usa las de ejemplo o se verán rotas.
-        // Sube tus fotos a la carpeta /img y pon el nombre exacto (ej: "img/goku1.jpg")
-        
         const plantillas = [
             {
                 id: 1,
@@ -353,7 +442,7 @@
                 precio: "200 MXN",
                 precioUsd: "11 USD",
                 descripcion: "Modelo escala 1:1 de Goku fase 3. Nivel de detalle extremo en el cabello. Archivo PDF + PDO incluidos. Altura final: 1.80m.",
-                imgPrincipal: "img/goku.png", // Cambiar a: "img/goku_main.jpg"
+                imgPrincipal: "img/goku.png", 
                 imgModal: [
                     "img/gb2.png",
                     "img/gb3.png"
@@ -404,6 +493,8 @@
         const modalOverlay = document.getElementById('modal-overlay');
         const modalContent = document.getElementById('modal-content');
         const closeModal = document.querySelector('.close-modal');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
 
         // 1. Renderizar Grid
         function renderizarTienda() {
@@ -415,6 +506,7 @@
                 
                 card.innerHTML = `
                     <div class="card-img-container">
+                        <div class="rating-badge">★★★★★ (5)</div>
                         <img src="${prod.imgPrincipal}" alt="${prod.nombre}" loading="lazy">
                     </div>
                     <div class="card-info">
@@ -440,9 +532,23 @@
             const imagenes = prod.imgModal && prod.imgModal.length > 0 ? prod.imgModal : [prod.imgPrincipal];
             
             imagenes.forEach(imgSrc => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'modal-gallery-item';
+                
+                const badge = document.createElement('div');
+                badge.className = 'rating-badge';
+                badge.textContent = '★★★★★ (5)';
+                
                 const img = document.createElement('img');
                 img.src = imgSrc;
-                gallery.appendChild(img);
+                img.onclick = (e) => {
+                    e.stopPropagation(); // Evita conflictos
+                    abrirLightbox(imgSrc);
+                };
+
+                itemDiv.appendChild(badge);
+                itemDiv.appendChild(img);
+                gallery.appendChild(itemDiv);
             });
 
             // Generar Links de Botones
@@ -452,7 +558,7 @@
             // WhatsApp
             document.getElementById('btn-wa').href = `https://wa.me/${CONFIG.whatsappNumber}?text=${mensajeEncoded}`;
             
-            // Messenger (m.me abre chat, el mensaje predefinido no siempre funciona igual en todos los dispositivos, pero abre el chat directo)
+            // Messenger
             document.getElementById('btn-ms').href = `https://m.me/${CONFIG.messengerUser}`;
             
             // Instagram DM
@@ -474,6 +580,16 @@
             if (e.target === modalOverlay) {
                 cerrarModal();
             }
+        });
+
+        // 4. Lightbox Lógica
+        function abrirLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+        }
+
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
         });
 
         // Iniciar
